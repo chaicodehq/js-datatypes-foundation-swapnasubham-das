@@ -52,20 +52,65 @@
  */
 export function parseFare(fareString) {
   // Your code here
+  if(typeof fareString !== "string"){
+    return -1;
+  }
+
+  const fare = parseFloat(fareString);
+  
+  if(Number.isNaN(fare)){
+    return -1;
+  }
+
+  return fare;
 }
 
 export function roundFare(amount, decimalPlaces) {
   // Your code here
+  if (typeof amount !== "number" || Number.isNaN(amount)) {
+    return "";
+  }
+  if (!Number.isInteger(decimalPlaces) || decimalPlaces < 0) {
+    return "";
+  }
+
+  return amount.toFixed(decimalPlaces);
 }
 
 export function calculateSurge(baseFare, surgeMultiplier) {
   // Your code here
+  if (typeof baseFare !== "number" || typeof surgeMultiplier !== "number" || baseFare <= 0 || surgeMultiplier <= 0 ||Number.isNaN(baseFare) ||Number.isNaN(surgeMultiplier)) {
+    return 0;
+  }
+
+  return Math.ceil(baseFare * surgeMultiplier);
 }
 
 export function findCheapestAndCostliest(...fares) {
   // Your code here
+  let validFares = [];
+
+  for (let i = 0; i < fares.length; i++) {
+    const fare = fares[i];
+    if (typeof fare === "number" && !Number.isNaN(fare)) {
+      validFares.push(fare);
+    }
+  }
+  if (validFares.length === 0) {
+    return null;
+  }
+
+  return {cheapest: Math.min(...validFares),costliest: Math.max(...validFares)};
 }
 
 export function getDistanceDifference(from, to) {
   // Your code here
+  const fromKm = parseInt(from, 10);
+  const toKm = parseInt(to, 10);
+
+  if (Number.isNaN(fromKm) || Number.isNaN(toKm)) {
+    return -1;
+  }
+
+  return Math.abs(toKm - fromKm);
 }
